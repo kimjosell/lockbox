@@ -259,8 +259,8 @@ enum Command {
 #[clap(
     name = "lockbox", 
     version = "0.1.0",
-    author = "Tu Nombre",
-    about = "🔐 Un gestor de contraseñas seguro desde la terminal"
+    author = "Kim Josell",
+    about = "🔐 A Safe password manager for your terminal"
 )]
 struct Args {
     #[clap(subcommand)]
