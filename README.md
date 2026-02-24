@@ -4,30 +4,92 @@ A command-line password manager built with Rust that uses military-grade AES-256
 
 ## Instructions for Build and Use
 
-Steps to build and/or run the software:
+### Building the Software
+
+Steps to build the software:
 
 1. Install Rust toolchain from https://rustup.rs/
 2. Clone this repository and navigate to the project directory
-3. Run `cargo build --release` to compile the optimized binary
-4. The executable will be in `target/release/lockbox` (or `lockbox.exe` on Windows)
+3. Build the optimized binary:
+   ```bash
+   cargo build --release
+   ```
 
-Instructions for using the software:
+The executable will be in:
+   - **Windows**: `target\release\lockbox.exe`
+   - **Linux/Mac**: `target/release/lockbox`
 
-1. **Add a password**: `cargo run -- add -s <service> -u <username> -p <password>`
-   - Example: `cargo run -- add -s github -u myuser -p secret123`
+### Running the Program
+
+You have three options to run the program:
+
+#### Option 1: Development Mode (with Cargo)
+
+Use this during development or if you haven't built the release binary:
+
+```bash
+cargo run -- add -s github -u myuser -p secret123
+cargo run -- list -v
+cargo run -- show github
+```
+
+#### Option 2: Run Compiled Binary Directly
+
+After building with `cargo build --release`, execute the binary directly:
+
+**Windows (PowerShell):**
+```powershell
+.\target\release\lockbox.exe add -s github -u myuser -p secret123
+.\target\release\lockbox.exe list -v
+.\target\release\lockbox.exe show github
+```
+
+**Linux/Mac:**
+```bash
+./target/release/lockbox add -s github -u myuser -p secret123
+./target/release/lockbox list -v
+./target/release/lockbox show github
+```
+
+#### Option 3: Install Globally (Recommended)
+
+Install the binary to your system PATH:
+
+```bash
+cargo install --path .
+```
+
+Now you can use `lockbox` from anywhere:
+
+```bash
+lockbox add -s github -u myuser -p secret123
+lockbox list -v
+lockbox show github
+```
+
+The binary will be installed to:
+- **Windows**: `C:\Users\YourUser\.cargo\bin\lockbox.exe`
+- **Linux/Mac**: `~/.cargo/bin/lockbox`
+
+### Commands Reference
+
+1. **Add a password**: `lockbox add -s <service> -u <username> -p <password>`
+   - Example: `lockbox add -s github -u myuser -p secret123`
+   - Username is optional: `lockbox add -s wifi -p mypassword`
    - You'll be prompted for your master password (invisible typing)
 
-2. **List all passwords**: `cargo run -- list`
-   - Add `-v` flag to show passwords in plain text: `cargo run -- list -v`
+2. **List all passwords**: `lockbox list`
+   - Add `-v` or `--verbose` flag to show passwords in plain text: `lockbox list -v`
 
-3. **Show specific password**: `cargo run -- show <service>`
-   - Example: `cargo run -- show github`
+3. **Show specific password**: `lockbox show <service>`
+   - Example: `lockbox show github`
 
-4. **Remove a password**: `cargo run -- remove <service>`
-   - Add `--force` flag to skip confirmation: `cargo run -- remove github --force`
+4. **Remove a password**: `lockbox remove <service>`
+   - Add `--force` flag to skip confirmation: `lockbox remove github --force`
 
-5. **Generate random password**: `cargo run -- generate -l <length>`
-   - Example: `cargo run -- generate -l 16`
+5. **Generate random password**: `lockbox generate <length>`
+   - Example: `lockbox generate 16`
+   - Default length is 16 characters
 
 **Important Notes:**
 - Your master password is required for all operations
